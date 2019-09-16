@@ -1,0 +1,233 @@
+#include <iostream>
+#include <cstdlib>
+#include <string>
+using namespace std;
+char grid[3][3] = { '1','2','3','4','5','6','7','8','9' };
+char player = 'X';
+string win = "no";
+int moves = 0;
+char playerWon = 'X';
+
+void ai() {
+	if (((grid[0][0] == 'O' && grid[0][1] == 'O') || (grid[0][0] == 'O' && grid[0][2] == 'O') || (grid[0][1] == 'O' && grid[0][2] == 'O')) && ((grid[0][0] != 'X') && (grid[0][1] != 'X' && grid[0][2] != 'X'))){
+		if (grid[0][0] == 1) {
+			grid[0][0] = 'O';
+		}
+		else if (grid[0][1] == 2) {
+			grid[0][1] = 'O';
+		}
+		else {
+			grid[0][2] = 'O';
+
+		}
+	}
+	
+	else if (win == "yes") {
+
+		cout << "Well Played" << endl;
+	}
+	else {
+		cout << " Thinking ..." << endl;
+		string move = "false";
+		while (move == "false") {
+			if ((moves >= 6) && (((((grid[0][0] != '1' && grid[0][1] != '2') && (grid[0][2] != '3' && grid[1][0] != '4')) && (grid[1][1] != '5' && grid[1][2] != '6'))) && (grid[2][0] != '7' && grid[2][1] != '8')) && grid[2][2] != '9') {
+				win = "stalemate";
+				break;
+			}
+			int x = rand() % 3;
+			int y = rand() % 3;
+			
+			if ((grid[x][y] != 'X') && (grid[x][y]!= 'O')) {
+					//cout << x << "  " << y;
+					grid[x][y] = 'O';
+					move = "true";
+			}
+		}
+	}
+
+
+
+}
+
+
+
+
+
+void draw() {
+
+	cout << "Storm's Tic Tac Toe" << endl << endl;
+
+	cout << grid[0][0] << " | " << grid[0][1] << " | " << grid[0][2] << endl;
+	cout << "_   _   _" << endl << endl;
+	cout << grid[1][0] << " | " << grid[1][1] << " | " << grid[1][2] << endl;
+	cout << "_   _   _" << endl << endl;
+	cout << grid[2][0] << " | " << grid[2][1] << " | " << grid[2][2] << endl;
+
+}
+void input() {
+	int spot ;
+	string spotCheck = "invalid";
+
+	cout << "Enter which spot (1-9) you would like to place an " << player << ": ";
+	cin >> spot;
+
+	if ((spot == 1) && (grid[0][0] == '1')) {
+		grid[0][0] = player;
+
+	}
+	else if ((spot == 2) && (grid[0][1] == '2')) {
+		grid[0][1] = player;
+	}
+	else if ((spot == 3) && (grid[0][2] == '3')) {
+		grid[0][2] = player;
+	}
+	else if ((spot == 4) && (grid[1][0] == '4')) {
+		grid[1][0] = player;
+	}
+	else if ((spot == 5) && (grid[1][1] == '5')) {
+		grid[1][1] = player;
+	}
+	else if ((spot == 6) && (grid[1][2] == '6')) {
+		grid[1][2] = player;
+	}
+	else if ((spot == 7) && (grid[2][0] == '7')) {
+		grid[2][0] = player;
+	}
+	else if ((spot == 8) && (grid[2][1] == '8')) {
+		grid[2][1] = player;
+	}
+	else if ((spot == 9) && (grid[2][2] == '9')) {
+		grid[2][2] = player;
+	}
+  else {
+    while(spotCheck =="invalid"){
+      cout << "Enter a VALID spot (1-9) where you would like to place an " << player <<". An O or X cannot be in that spot!!" <<": ";
+    	cin >> spot;
+      	  if ((spot == 1) && (grid[0][0] == '1')) {
+      		grid[0][0] = player;
+          spotCheck = "valid";
+      	}
+      	else if ((spot == 2) && (grid[0][1] == '2')) {
+      		grid[0][1] = player;
+      	}
+      	else if ((spot == 3) && (grid[0][2] == '3')) {
+      		grid[0][2] = player;
+      		spotCheck = "valid";
+      	}
+      	else if ((spot == 4) && (grid[1][0] == '4')) {
+      		grid[1][0] = player;
+      		spotCheck = "valid";
+      	}
+      	else if ((spot == 5) && (grid[1][1] == '5')) {
+      		grid[1][1] = player;
+      		spotCheck = "valid";
+      	}
+      	else if ((spot == 6) && (grid[1][2] == '6')) {
+      		grid[1][2] = player;
+      		spotCheck = "valid";
+      	}
+      	else if ((spot == 7) && (grid[2][0] == '7')) {
+      		grid[2][0] = player;
+      		spotCheck = "valid";
+      	}
+      	else if ((spot == 8) && (grid[2][1] == '8')) {
+      		grid[2][1] = player;
+      		spotCheck = "valid";
+      	}
+      	else if ((spot == 9) && (grid[2][2] == '9')) {
+      		grid[2][2] = player;
+      		spotCheck = "valid";
+      	}
+      	else{
+      	  spotCheck = "invalid";
+      	}
+    }
+  }
+}
+\
+
+
+
+void game() {
+  
+  
+	if ((grid[0][2] == grid[1][1]) && (grid[1][1] == grid[2][0])) {
+		win = "yes";
+		
+		if (grid[0][2] == 'O'){
+		  playerWon = 'O';
+		}
+	}
+	else if ((grid[0][0] == grid[0][1]) && (grid[0][1] == grid[0][2])) {
+		win = "yes";
+		if (grid[0][0]=='O'){
+		  playerWon = 'O';
+		}
+	}
+	else if ((grid[1][0] == grid[1][1]) && (grid[1][1] == grid[1][2])) {
+		win = "yes";
+		if (grid[1][0]=='O'){
+		  playerWon = 'O';
+		}
+	}
+	else if ((grid[2][0] == grid[2][1]) && (grid[2][1] == grid[2][2])) {
+		win = "yes";
+		if (grid[2][0]=='O'){
+		  playerWon = 'O';
+		}
+	}
+	else if ((grid[0][0] == grid[1][0]) && (grid[1][0] == grid[2][0])) {
+		win = "yes";
+		if (grid[0][0]=='O'){
+		  playerWon = 'O';
+		}
+	}
+	else if ((grid[0][1] == grid[1][1]) && (grid[1][1] == grid[2][2])) {
+		win = "yes";
+		if (grid[0][1]=='O'){
+		  playerWon = 'O';
+		}
+	}
+	else if ((grid[0][2] == grid[1][2]) && (grid[1][2] == grid[2][2])) {
+		win = "yes";
+		if (grid[0][2]=='O'){
+		  playerWon = 'O';
+		}
+	}
+	else if ((grid[0][0] == grid[1][1]) && (grid[1][1] == grid[2][2])) {
+		win = "yes";
+		if (grid[0][0]=='O'){
+		  playerWon = 'O';
+		}
+	}
+	else if ((grid[0][1] == grid[1][1]) && (grid[1][1] == grid[2][1])) {
+		win = "yes";
+		if (grid[0][1]=='O'){
+		  playerWon = 'O';
+		}
+	}
+	else if ((moves >= 6)&&(((((grid[0][0] != '1' && grid[0][1] != '2') && (grid[0][2] != '3' && grid[1][0] != '4')) && (grid[1][1] != '5' && grid[1][2] != '6'))) && (grid[2][0] != '7' && grid[2][1] != '8')) && grid[2][2] != '9') {
+		win = "stalemate";
+	}
+
+
+}
+int main() {
+	while (win == "no") {
+		draw();
+		input();
+		moves += 1;
+		game();
+		ai();
+		moves += 1;
+		game();
+	}
+	if (win == "yes") {
+		draw();
+		cout << playerWon << " has won the game!!!!" << endl;
+	}
+	else {
+		cout << "This is a stalemate." << endl;
+	}
+	return 0;
+}
